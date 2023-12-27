@@ -5,7 +5,7 @@
       <th scope="col">#</th>
       <th scope="col">Title</th>
       <th scope="col">Slug</th>
-      <th scope="col">Body</th>
+      <th scope="col">Category</th>
       <th scope="col colspan-2">Action</th>
     </tr>
   </thead>
@@ -16,13 +16,19 @@
       <td>{{$blog->title}}</td>
       <td>{{$blog->slug}}</td>
       <td>{{$blog->category->name}}</td>
+
+      @if(auth()->user()->can('edit',$blog))
       <td><a class="btn btn-link btn-warning" href="/admin/blogs/{{$blog->id}}/edit">Edit</a></td>
+      <td>
       <form action="/admin/blogs/{{$blog->id}}/delete" method="post">
         @csrf
         @method('DELETE')
-      <td><button  type="submit" class="btn-danger">Delete</button></td>
+      <button  type="submit" class="btn-danger">Delete</button>
       </form>
+    </td>
+      @endif
     </tr>
+
     @endforeach
 
   </tbody>

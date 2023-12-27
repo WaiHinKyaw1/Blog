@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use App\Models\Subscribe;
 use Illuminate\Http\Request;
 
 class SubscribeController extends Controller
@@ -17,5 +18,14 @@ class SubscribeController extends Controller
          }
 
          return back();
+    }
+    public function emailStore(Subscribe $subscribe){
+      $data=request()->validate([
+            'email'=>['required']
+        ]);
+$subscribe->email=$data['email'];
+$subscribe->save();
+        return redirect('/');
+
     }
 }

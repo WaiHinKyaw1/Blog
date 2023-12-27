@@ -21,11 +21,12 @@ class BlogFactory extends Factory
     {
         return [
             'title' => fake()->sentence(),
+            'photo'=>fake()->imageUrl(),
             'slug' => fake()->slug(),
             'body' => fake()->paragraph(),
             'category_id'=>Category::factory(),
             'user_id'=>User::factory(),
-            
+
 
         ];
     }

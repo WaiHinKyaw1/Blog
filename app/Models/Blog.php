@@ -4,17 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 
 class Blog extends Model
 {
     use HasFactory;
-    protected $fillable=['title','slug','body','category_id','user_id'];
+    protected $fillable=['title','slug','body','category_id','user_id','photo'];
     protected static function booted()
     {
         static::deleting(function ($item) {
             $item->comments()->delete();
             $item->subscribedUsers()->delete();
-        });
+            File::delete(public_path($item->photo));});
     }
 
 
@@ -40,8 +41,6 @@ class Blog extends Model
 
         return $this->subscribedUsers->contains('id',$user->id);
     }
-
-
     public function scopeFilter($blogquery, $Filters)
     {
         if ($Filters['search'] ?? null) {

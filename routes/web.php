@@ -13,6 +13,7 @@ use App\Http\Middleware\MustBeAdminUser;
 use App\Http\Middleware\MustBeAuthUser;
 use App\Http\Middleware\MustBeGusetUser;
 use App\Mail\SubscriberMail;
+use App\Models\Blog;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
@@ -25,15 +26,22 @@ Route::middleware(MustBeAuthUser::class)->group(function(){
     Route::patch('/comments/{comment}/update',[CommentController::class,'update']);
     Route::delete('/comments/{comment}/delete',[CommentController::class,'destory']);
     Route::post('/logout',[LogoutController::class,'destroy']);
+    Route::post('/blog/subscribe/emailstore',[SubscribeController::class,'emailStore']);
 });
 
 Route::middleware(MustBeAdminUser::class)->group(function(){
-    Route::get('/admin',[AdminController::class,'index']);
+    Route::get('/admin',[AdminController::class,'index'])->name('admin');
     Route::get('/admin/blog/create',[AdminController::class,'create']);
     Route::post('/admin/blogs/store',[AdminController::class,'store']);
-    Route::put('/admin/blogs/{blog}/update',[AdminController::class,'update']);
-    Route::delete('/admin/blogs/{blog}/delete',[AdminController::class,'destory']);
-    Route::get('/admin/blogs/{blog}/edit',[AdminController::class,'edit']);
+    Route::delete('/admin/blogs/{blog}/delete',[AdminController::class,'destory'])->middleware('can:edit,blog');
+    Route::put('/admin/blogs/{blog}/update',[AdminController::class,'update'])->middleware('can:edit,blog');
+    Route::get('/admin/blogs/{blog}/edit',[AdminController::class,'edit'])->middleware('can:edit,blog');
+    Route::get('/admin/blog/categoryShow',[AdminController::class,'categoryShow'])->name('adminCategory');
+    Route::get('/admin/blog/categoryCreate',[AdminController::class,'categoryCreate']);
+    Route::post('/admin/category/store',[AdminController::class,'categoryStore']);
+    Route::get('/admin/category/{category}/categoryEdit',[AdminController::class,'categoryEdit']);
+    Route::put('/admin/category/{category}/categoryUpate',[AdminController::class,'categoryUpdate']);
+    Route::delete('/admin/category/{category}/categoryDelete',[AdminController::class,'categoryDestory']);
 });
 
 
