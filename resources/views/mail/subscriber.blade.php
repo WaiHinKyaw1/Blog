@@ -1,5 +1,4 @@
-<!DO
-CTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,8 +6,8 @@ CTYPE html>
     <title>Document</title>
 </head>
 <body>
-    <h1>Subscriber Mail to {{$subscriber->name}}</h1>
-    <p>Your subscribe blog has update</p>
-    <p>Comment message:{{$comment->body}}</p>
+<h1>Subscriber mail to {{$subscriber->name}}</h1>
+<p>Your subscriber mail is update</p>
+<p>Comment message - {{$comment->body}}</p>
 </body>
 </html>

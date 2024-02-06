@@ -9,14 +9,14 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SubscriberMail extends Mailable implements ShouldQueue
+class BlogMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(public $subscriber,public $comment)
+    public function __construct(public $subscribe)
     {
         //
     }
@@ -27,7 +27,7 @@ class SubscriberMail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Subscriber Mail' . $this->subscriber->name,
+            subject: 'Blog Mail'. $this->subscribe->email,
         );
     }
 
@@ -37,7 +37,7 @@ class SubscriberMail extends Mailable implements ShouldQueue
     public function content(): Content
     {
         return new Content(
-            view: 'mail.subscriber',
+            view: 'mail.blogMail',
         );
     }
 

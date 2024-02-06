@@ -12,22 +12,26 @@ class BlogController extends Controller
 {
 
     public function index(){
-            $Filters=request(['search','category','author']);
-            $userType=auth()->user()->is_admin;
+        $Filters=request(['search','category','author']);
 
-            if($userType == true){
-                return redirect()->route('admin');
-            }
-            else{
-                return view('blogs.index',[
-                    'blogs'=>Blog::with('category','author')
-                    ->filter($Filters)
-                    ->latest()
-                    ->paginate(3)
-                    ->withQueryString(),
+        $userType=auth()->user()->is_admin;
 
-                ]);
-            }
+        if($userType == 1){
+            return redirect('/admin');
+        }else{
+            return view('blogs.index',[
+                'blogs'=>Blog::with('category','author')
+                ->filter($Filters)
+                ->latest()
+                ->paginate(3)
+                ->withQueryString(),
+
+            ]);
+        }
+
+
+
+
     }
     public function show(Blog $blog){
             return view('blogs.show',[

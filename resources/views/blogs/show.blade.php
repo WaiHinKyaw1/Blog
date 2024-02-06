@@ -9,19 +9,19 @@
                     <div class="card-body">
                         <h3 class="card-title">{{$blog->title}}</h3>
                         <div class="text-center">
-                        <div class="card-subtitle mb-3">Author - <a href="/users/{{$blog->author->username}}">{{$blog->author->name}}</a></div>
-                        <div class="card-subtitle mb-3"> <a href="/categories/{{$blog->category->slug}}"> <span class="badge bg-secondary">{{$blog->category->name}}</span></a></div>
-                        <div class="card-subtitle mb-3 text-muted small">{{$blog->created_at->diffForHumans()}}</div>
-                        <div>
-                            <form action="/blogs/{{$blog->slug}}/handle-subscribe" method="POST">
-                                @csrf
-                                @if($blog->isSubscribeBy(auth()->user()))
-                                <button type="submit" class=" btn btn-secondary">Unsubscribe</button>
-                                @else
-                                <button type="submit" class=" btn btn-warning">Subscribe</button>
-                                @endif
-                            </form>
-                        </div>
+                            <div class="card-subtitle mb-3">Author - <a href="/users/{{$blog->author->username}}">{{$blog->author->name}}</a></div>
+                            <div class="card-subtitle mb-3"> <a href="/categories/{{$blog->category->slug}}"> <span class="badge bg-secondary">{{$blog->category->name}}</span></a></div>
+                            <div class="card-subtitle mb-3 text-muted small">{{$blog->created_at->diffForHumans()}}</div>
+                            <div>
+                                <form action="/blogs/{{$blog->slug}}/handle-subscribe" method="POST">
+                                    @csrf
+                                    @if($blog->isSubscribeBy(auth()->user()))
+                                    <button type="submit" class=" btn btn-secondary">Unsubscribe</button>
+                                    @else
+                                    <button type="submit" class=" btn btn-warning">Subscribe</button>
+                                    @endif
+                                </form>
+                            </div>
                         </div>
                         <p class="card-text">
                             {{$blog->body}}
@@ -43,13 +43,11 @@
 
                         </form>
                     </div>
-                    @foreach($blog->comments()->with('user')->orderby('created_at','desc')->get() as $comment)
-
+                    @foreach($blog->comments()->with('user')->where('status',1)->orderby('created_at','desc')->get() as $comment)
                     <div class=" p-4 mt-2">
                         <h3>
                             {{$comment->user->name}}
                         </h3>
-
                         <p>
                             {{$comment->body}}
                         </p>

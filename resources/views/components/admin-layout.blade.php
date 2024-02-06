@@ -22,6 +22,13 @@
 
                 </ul>
             </div>
+            <div class=" mt-3">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <a href="/admin/comment">Comment</a>
+                    </li>
+                </ul>
+            </div>
             </div>
 
             <div class="col-md-8">

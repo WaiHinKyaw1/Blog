@@ -10,6 +10,7 @@ class Blog extends Model
 {
     use HasFactory;
     protected $fillable=['title','slug','body','category_id','user_id','photo'];
+    
     protected static function booted()
     {
         static::deleting(function ($item) {
